@@ -1,17 +1,5 @@
-# Example usage:
-# > x <- matrix(rnorm(16), nrow = 4)          // Create a matrix x
-# > cx <- makeCacheMatrix(x)                  // Create our special matrix
-# > cx$get()                                  // Return the matrix
-# > cacheSolve(cx)                            // Return the inverse
-# > cacheSolve(cx)                            // Call the 2nd time, so return
-#                                             // the cached inverse
 
-
-# makeCacheMatrix: return a list of functions to:
-# 1. Set the value of the matrix
-# 2. Get the value of the matrix
-# 3. Set the value of the inverse
-# 4. Get the value of the inverse
+## This function creates a special "matrix" object that can cache its inverse.
 makeCacheMatrix <- function(x = matrix()) {
   # inv will store the cached inverse matrix
   inv <- NULL
@@ -34,8 +22,10 @@ makeCacheMatrix <- function(x = matrix()) {
 }
 
 
-# cacheSolve: Compute the inverse of the matrix. If the inverse is already
-# calculated before, it returns the cached inverse.
+## This function computes the inverse of the special "matrix" returned 
+## by makeCacheMatrix above. If the inverse has already been calculated 
+## (and the matrix has not changed), 
+## then cacheSolve should retrieve the inverse from the cache.
 cacheSolve <- function(x, ...) {
   inv <- x$getinv()
   
@@ -55,3 +45,13 @@ cacheSolve <- function(x, ...) {
   # Return it
   inv
 }
+
+# Example usage:
+# > source('cachematrix.R')
+# > X <- matrix(rnorm(81), nrow = 9)          # Create a matrix x
+# > cX <- makeCacheMatrix(X)                  # Create our special matrix
+# > cX$get()                                  # Return the matrix
+# > cacheSolve(cX)                            # Return the inverse
+# > cacheSolve(cX)                            # Call the 2nd time, so return the cached
+#                                             
+
